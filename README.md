@@ -1,4 +1,4 @@
-# Search V1 (LCEL Web Agent)
+# LCEL Web Agent
 
 A full-stack AI search assistant that answers user questions with **optional real web grounding**. The backend uses **LangChain Expression Language (LCEL)** to chain steps: a lightweight router decides whether to answer **directly** from the LLM or to run a **web pipeline** (search → fetch pages → summarize → compose an answer with **source URLs**). Request bodies and the final API shape are validated with **Zod**.
 
