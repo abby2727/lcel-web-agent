@@ -2,7 +2,9 @@
 
 A full-stack AI search assistant that answers user questions with **optional real web grounding**. The backend uses **LangChain Expression Language (LCEL)** to chain steps: a lightweight router decides whether to answer **directly** from the LLM or to run a **web pipeline** (search → fetch pages → summarize → compose an answer with **source URLs**). Request bodies and the final API shape are validated with **Zod**.
 
-> **Note:** The UI has **no chat memory** across turns in the backend; each request is independent. The browser keeps a local chat history only for display. **Web search requires a [Tavily](https://tavily.com) API key**; without it, routes that choose the web path will fail when search runs.
+<!-- > **Note:** The UI has **no chat memory** across turns in the backend; each request is independent. The browser keeps a local chat history only for display. -->
+
+<!-- > **Web search requires a [Tavily](https://tavily.com) API key**; without it, routes that choose the web path will fail when search runs. -->
 
 ---
 
@@ -14,7 +16,7 @@ A full-stack AI search assistant that answers user questions with **optional rea
 
 ### Why LangChain in this project?
 
-You *could* call OpenAI (or Gemini, Groq) with plain `fetch`. LangChain is still useful here because:
+You _could_ call OpenAI (or Gemini, Groq) with plain `fetch`. LangChain is still useful here because:
 
 1. **One API for several providers** — `ChatOpenAI`, `ChatGoogleGenerativeAI`, and `ChatGroq` share a similar invoke pattern (`shared/models.ts`), so switching `MODEL_PROVIDER` is localized.
 2. **LCEL runnables** — Steps are expressed as **runnables** that can be sequenced and branched (`RunnableSequence`, `RunnableBranch`, `RunnableLambda`), which keeps the web vs direct split explicit and testable (`searchChain.ts`).
@@ -143,15 +145,15 @@ search_tool_langchain_complete/
 
 ## Tech Stack
 
-| Layer | Stack |
-| ----- | ----- |
-| **API** | Node.js, Express, `tsx` for dev |
-| **Orchestration** | `@langchain/core` runnables (LCEL) |
-| **LLM** | `@langchain/openai`, `@langchain/google-genai`, `@langchain/groq` |
-| **Validation** | `zod` |
-| **Web search** | Tavily REST API (`utils/webSearch.ts`) |
-| **HTML cleanup** | `html-to-text` |
-| **Frontend** | Next.js 16, React 19, Tailwind CSS v4, Radix primitives, shadcn-style UI, `lucide-react` |
+| Layer             | Stack                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| **API**           | Node.js, Express, `tsx` for dev                                                          |
+| **Orchestration** | `@langchain/core` runnables (LCEL)                                                       |
+| **LLM**           | `@langchain/openai`, `@langchain/google-genai`, `@langchain/groq`                        |
+| **Validation**    | `zod`                                                                                    |
+| **Web search**    | Tavily REST API (`utils/webSearch.ts`)                                                   |
+| **HTML cleanup**  | `html-to-text`                                                                           |
+| **Frontend**      | Next.js 16, React 19, Tailwind CSS v4, Radix primitives, shadcn-style UI, `lucide-react` |
 
 ---
 
@@ -171,13 +173,13 @@ npm init -y
 npm install -D typescript tsx @types/node @types/cors @types/html-to-text
 ```
 
-| Package | Why |
-| ------- | --- |
-| `typescript` | Type-checking and TS sources |
-| `tsx` | Run TypeScript in dev (`npm run dev` uses `tsx watch`) |
-| `@types/node` | Node.js typings |
-| `@types/cors` | Typings for CORS middleware |
-| `@types/html-to-text` | Typings for HTML-to-text conversion |
+| Package               | Why                                                    |
+| --------------------- | ------------------------------------------------------ |
+| `typescript`          | Type-checking and TS sources                           |
+| `tsx`                 | Run TypeScript in dev (`npm run dev` uses `tsx watch`) |
+| `@types/node`         | Node.js typings                                        |
+| `@types/cors`         | Typings for CORS middleware                            |
+| `@types/html-to-text` | Typings for HTML-to-text conversion                    |
 
 ### 3. Install runtime dependencies
 
@@ -187,18 +189,18 @@ npm install @langchain/core @langchain/openai @langchain/google-genai @langchain
 npm install @types/express
 ```
 
-| Package | Why |
-| ------- | --- |
-| `express` | HTTP server; exposes `POST /search` |
-| `cors` | Restricts browser origins via `ALLOWED_ORIGIN` |
-| `dotenv` | Loads `.env` (see `import "dotenv/config"` in `index.ts`) |
-| `zod` | Validates env (`shared/env.ts`), request body, and `SearchAnswer` shape |
-| `html-to-text` | Strips HTML from fetched pages in `openUrl.ts` |
-| `@langchain/core` | `RunnableSequence`, `RunnableBranch`, `RunnableLambda`, messages |
-| `@langchain/openai` | `ChatOpenAI` when `MODEL_PROVIDER=openai` |
-| `@langchain/google-genai` | `ChatGoogleGenerativeAI` when `MODEL_PROVIDER=gemini` |
-| `@langchain/groq` | `ChatGroq` when `MODEL_PROVIDER=groq` |
-| `@types/express` | Express typings (listed as a runtime dependency in this project) |
+| Package                   | Why                                                                     |
+| ------------------------- | ----------------------------------------------------------------------- |
+| `express`                 | HTTP server; exposes `POST /search`                                     |
+| `cors`                    | Restricts browser origins via `ALLOWED_ORIGIN`                          |
+| `dotenv`                  | Loads `.env` (see `import "dotenv/config"` in `index.ts`)               |
+| `zod`                     | Validates env (`shared/env.ts`), request body, and `SearchAnswer` shape |
+| `html-to-text`            | Strips HTML from fetched pages in `openUrl.ts`                          |
+| `@langchain/core`         | `RunnableSequence`, `RunnableBranch`, `RunnableLambda`, messages        |
+| `@langchain/openai`       | `ChatOpenAI` when `MODEL_PROVIDER=openai`                               |
+| `@langchain/google-genai` | `ChatGoogleGenerativeAI` when `MODEL_PROVIDER=gemini`                   |
+| `@langchain/groq`         | `ChatGroq` when `MODEL_PROVIDER=groq`                                   |
+| `@types/express`          | Express typings (listed as a runtime dependency in this project)        |
 
 **Also present in this repo’s `package.json`:** `@langchain/classic`, `@google/generative-ai` — typically pulled for compatibility with the LangChain / Google GenAI stack; the application code imports the chat model wrappers above.
 
@@ -258,22 +260,22 @@ npx shadcn@latest add button card input separator textarea
 
 **Dependencies**
 
-| Package | Why |
-| ------- | --- |
-| `next` | App Router, dev server, production build |
-| `react` / `react-dom` | UI |
-| `@radix-ui/react-slot` / `@radix-ui/react-separator` | Accessible primitives for composed components |
-| `class-variance-authority` | Variant styling for UI components |
-| `clsx` + `tailwind-merge` | Conditional classes; merge Tailwind safely (`cn` in `lib/utils.ts`) |
-| `lucide-react` | Icons (if used in expanded UI) |
+| Package                                              | Why                                                                 |
+| ---------------------------------------------------- | ------------------------------------------------------------------- |
+| `next`                                               | App Router, dev server, production build                            |
+| `react` / `react-dom`                                | UI                                                                  |
+| `@radix-ui/react-slot` / `@radix-ui/react-separator` | Accessible primitives for composed components                       |
+| `class-variance-authority`                           | Variant styling for UI components                                   |
+| `clsx` + `tailwind-merge`                            | Conditional classes; merge Tailwind safely (`cn` in `lib/utils.ts`) |
+| `lucide-react`                                       | Icons (if used in expanded UI)                                      |
 
 **Dev dependencies**
 
-| Package | Why |
-| ------- | --- |
-| `tailwindcss` / `@tailwindcss/postcss` | Tailwind v4 |
-| `tw-animate-css` | Animation utilities used with the theme |
-| `typescript` / `@types/*` | TypeScript |
+| Package                                | Why                                     |
+| -------------------------------------- | --------------------------------------- |
+| `tailwindcss` / `@tailwindcss/postcss` | Tailwind v4                             |
+| `tw-animate-css`                       | Animation utilities used with the theme |
+| `typescript` / `@types/*`              | TypeScript                              |
 
 ### 4. Create `.env` in the client root
 
@@ -316,14 +318,14 @@ Open [http://localhost:3000](http://localhost:3000), enter a query (at least **5
 
 ## Key Files Reference
 
-| File | Role |
-| ---- | ---- |
+| File                                   | Role                                            |
+| -------------------------------------- | ----------------------------------------------- |
 | `agent/src/search_tool/searchChain.ts` | Exports `runSearch` and the composed LCEL graph |
-| `agent/src/shared/models.ts` | Single place to swap LLM provider |
-| `agent/src/utils/webSearch.ts` | Tavily integration |
-| `agent/src/utils/schemas.ts` | `SearchInputSchema`, `SearchAnswerSchema`, etc. |
-| `client/src/lib/config.ts` | Reads `NEXT_PUBLIC_API_URL` |
-| `client/src/app/page.tsx` | `POST` to `${API_URL}/search` with `{ q }` |
+| `agent/src/shared/models.ts`           | Single place to swap LLM provider               |
+| `agent/src/utils/webSearch.ts`         | Tavily integration                              |
+| `agent/src/utils/schemas.ts`           | `SearchInputSchema`, `SearchAnswerSchema`, etc. |
+| `client/src/lib/config.ts`             | Reads `NEXT_PUBLIC_API_URL`                     |
+| `client/src/app/page.tsx`              | `POST` to `${API_URL}/search` with `{ q }`      |
 
 ---
 
