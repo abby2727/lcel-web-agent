@@ -6,6 +6,36 @@ A full-stack AI search assistant that answers user questions with **optional rea
 
 ---
 
+## Why LangChain, LCEL, Tavily, and Zod?
+
+### What is LangChain?
+
+**LangChain** is an ecosystem for building LLM-powered applications in TypeScript (and Python). It provides **abstractions for models, messages, and composable workflows** so you are not stuck hand-wiring every step. In this repo we use the **JavaScript/TypeScript** packages (`@langchain/core` plus provider integrations like `@langchain/openai`), not the full “agents with dozens of tools” stack—here the focus is **orchestration** and **chat models**.
+
+### Why LangChain in this project?
+
+You *could* call OpenAI (or Gemini, Groq) with plain `fetch`. LangChain is still useful here because:
+
+1. **One API for several providers** — `ChatOpenAI`, `ChatGoogleGenerativeAI`, and `ChatGroq` share a similar invoke pattern (`shared/models.ts`), so switching `MODEL_PROVIDER` is localized.
+2. **LCEL runnables** — Steps are expressed as **runnables** that can be sequenced and branched (`RunnableSequence`, `RunnableBranch`, `RunnableLambda`), which keeps the web vs direct split explicit and testable (`searchChain.ts`).
+3. **Messages and model config** — System/human messages and parameters like temperature are structured consistently across summarization, composition, and repair passes.
+
+So LangChain is not “magic”; it is **structure** for multi-step LLM workflows and multi-vendor chat models.
+
+### What is LCEL?
+
+**LCEL** (LangChain Expression Language) is the **composable runnable** style in `@langchain/core`: you build a pipeline from small units, pipe outputs to inputs, and branch on conditions. In this project the graph is: **router → branch (web path | direct path) → final validation**. That matches how you think about the product (“first decide mode, then run the right pipeline”) without a separate orchestration framework.
+
+### Why Tavily?
+
+**Tavily** is a search API aimed at LLM apps: you send a natural-language query and get ranked web results suitable for grounding. The **web path** uses Tavily to **retrieve** URLs, then the agent **fetches and summarizes** pages locally before writing an answer with **source links**. Alternatives exist (other search APIs, custom crawlers); Tavily keeps retrieval simple and API-driven.
+
+### Why Zod?
+
+**Zod** validates **shapes at runtime**: the HTTP body (`{ q }`), environment-related config in the agent, and the **`{ answer, sources }`** response contract. That catches bad input early and makes the API predictable for the Next.js client and tools like Postman.
+
+---
+
 ## What This Project Demonstrates
 
 - **Heuristic routing** — keyword and pattern rules (`routeStrategy.ts`) pick `web` vs `direct` without an extra LLM call for routing.
