@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+build
+coverage
+.next
+.nuxt
+out
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# OS / Editor
+.DS_Store
+.vscode
+.idea
+
+# Package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Generated files
+*.min.js
+*.bundle.js
+
+# Laravel / PHP specific
+vendor
+storage
+bootstrap/cache
+
+# Public assets
+public/build
+public/hot
