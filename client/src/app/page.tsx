@@ -61,8 +61,7 @@ export default function Home() {
           ...old,
           {
             role: "assistant",
-            content:
-              "I tried to ans, but something went wrong. Please try again",
+            content: "I tried to ans, but something went wrong. Please try again",
             sources: [],
             time: timeDiff,
             error: errorMsg,
@@ -111,21 +110,16 @@ export default function Home() {
     <div className="flex h-dvh flex-col bg-[#f9fafb] text-gray-900">
       <header className="border-b bg-white px-4 py-3 text-sm flex items-center justify-between">
         <div className="flex flex-col">
-          <span className="font-medium text-gray-800">
-            Search V1 (LCEL Web Agent)
-          </span>
+          <span className="font-medium text-gray-800">Search V1 (LCEL Web Agent)</span>
           <span className="text-[12px] text-gray-500">
-            Answer with sources. Some queries will browse the web and some
-            don't.
+            Answer with sources. Some queries will browse the web and some don't.
           </span>
         </div>
       </header>
       <main className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
         {chat.length === 0 && (
           <div className="mx-auto max-2-2xl text-center text-sm text-gray-500">
-            <div className="text-base font-semibold text-gray-800 mb-1">
-              Ask anything
-            </div>
+            <div className="text-base font-semibold text-gray-800 mb-1">Ask anything</div>
             <div className="text-[14px] leading-relaxed">
               Examples:
               <br />
@@ -143,14 +137,9 @@ export default function Home() {
           // user role
           if (turn.role === "user") {
             return (
-              <div
-                key={idx}
-                className="mx-auto max-w-2xl flex justify-end text-right"
-              >
+              <div key={idx} className="mx-auto max-w-2xl flex justify-end text-right">
                 <div className="inline-block rounded-2xl bg-gray-900 px-4 py-3 text-sm text-white shadow-md max-w-full">
-                  <div className="whitespace-pre-wrap wrap-break-word">
-                    {turn.content}
-                  </div>
+                  <div className="whitespace-pre-wrap wrap-break-word">{turn.content}</div>
                 </div>
               </div>
             );
@@ -158,10 +147,7 @@ export default function Home() {
 
           //assitant
           return (
-            <div
-              key={idx}
-              className="mx-auto max-w-2xl flex items-start gap-3 text-left"
-            >
+            <div key={idx} className="mx-auto max-w-2xl flex items-start gap-3 text-left">
               <div className="flex h-8 w-8 flex-none items-center justify-center rounded-md bg-gray-800 text-[11px] text-white font-semibold">
                 AI
               </div>
@@ -170,16 +156,12 @@ export default function Home() {
                   {turn.content}
                 </div>
                 <div className="text-[11px] text-gray-500 flex flex-wrap items-center gap-x-2">
-                  {typeof turn.time === "number" && (
-                    <span>answered in {turn.time} time</span>
-                  )}
+                  {typeof turn.time === "number" && <span>answered in {turn.time} time</span>}
                   {turn?.error && <span>{turn.error}</span>}
                 </div>
                 {turn.sources && turn.sources.length > 0 && (
                   <div className="rounded-lg  bg-white px-3 py-2 text-[12px] shadow-sm ring-1 ring-gray-200">
-                    <div className="text-[11px] font-medium text-gray-600 mb-1">
-                      Sources
-                    </div>
+                    <div className="text-[11px] font-medium text-gray-600 mb-1">Sources</div>
                     <ul className="space-y-1">
                       {turn.sources.map((source, idx) => (
                         <li key={idx} className="truncate">
