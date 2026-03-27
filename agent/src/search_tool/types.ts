@@ -3,10 +3,12 @@
 // direct path -> LLM. no browsing
 // shared shape -> candidate
 
+// candidate -> answer, sources, mode
+
 export type candidate = {
-  answer: string;
-  sources: string[]; // []
-  mode: "web" | "direct";
+	answer: string;
+	sources: string[]; // []
+	mode: 'web' | 'direct';
 };
 
 // explain what docker is

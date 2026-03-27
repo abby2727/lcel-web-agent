@@ -37,9 +37,7 @@ export function routeStrategy(q: string): "web" | "direct" {
     /\bnear\s+me|nearby\b/u,
   ];
 
-  const isQueryPresentInPatterns = patterns.some((pattern) =>
-    pattern.test(trimedQuery)
-  );
+  const isQueryPresentInPatterns = patterns.some((pattern) => pattern.test(trimedQuery));
 
   if (isLongQuery || recentYearRegex || isQueryPresentInPatterns) {
     return "web";

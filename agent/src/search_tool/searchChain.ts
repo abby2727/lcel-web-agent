@@ -22,11 +22,7 @@ const branch = RunnableBranch.from<{ q: string; mode: "web" | "direct" }, any>([
   directPath,
 ]);
 
-export const searchChain = RunnableSequence.from([
-  routerStep,
-  branch,
-  finalValidateAndPolish,
-]);
+export const searchChain = RunnableSequence.from([routerStep, branch, finalValidateAndPolish]);
 
 export async function runSearch(input: SearchInput) {
   return await searchChain.invoke(input);

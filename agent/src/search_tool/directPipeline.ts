@@ -15,22 +15,17 @@ export const directPath = RunnableLambda.from(
 
     const res = await model.invoke([
       new SystemMessage(
-        [
-          "You answer briefly and clearly for beginners",
-          "If unsure, say so",
-        ].join("\n")
+        ["You answer briefly and clearly for beginners", "If unsure, say so"].join("\n"),
       ),
       new HumanMessage(input.q),
     ]);
 
-    const directAns = (
-      typeof res.content === "string" ? res.content : String(res.content)
-    ).trim();
+    const directAns = (typeof res.content === "string" ? res.content : String(res.content)).trim();
 
     return {
       answer: directAns,
       sources: [],
       mode: "direct",
     };
-  }
+  },
 );

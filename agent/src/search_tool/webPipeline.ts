@@ -25,7 +25,7 @@ export const webSearchStep = RunnableLambda.from(
       ...input,
       results,
     };
-  }
+  },
 );
 
 export const openAndSummarizeStep = RunnableLambda.from(
@@ -49,7 +49,7 @@ export const openAndSummarizeStep = RunnableLambda.from(
           url: opened.url,
           summary: summarizeContent.summary,
         };
-      })
+      }),
     );
 
     // status -> fulfilled
@@ -78,7 +78,7 @@ export const openAndSummarizeStep = RunnableLambda.from(
       pageSummaries: settledResultsPageSummaries,
       fallback: "none" as const,
     };
-  }
+  },
 );
 
 // compose step
@@ -98,10 +98,7 @@ export const ComposeStep = RunnableLambda.from(
     if (!input.pageSummaries || input.pageSummaries.length === 0) {
       const directResponseFromModel = await model.invoke([
         new SystemMessage(
-          [
-            "You answer briefly and clearly for beginners",
-            "If unsure, say so",
-          ].join("\n")
+          ["You answer briefly and clearly for beginners", "If unsure, say so"].join("\n"),
         ),
         new HumanMessage(input.q),
       ]);
@@ -127,19 +124,16 @@ export const ComposeStep = RunnableLambda.from(
           "- Be accurate and netral",
           "- 5-8 sentences max",
           "- Use only the provided summaries; do not invent new facts",
-        ].join("\n")
+        ].join("\n"),
       ),
       new HumanMessage(
-        [
-          `Question: ${input.q}`,
-          "Summaries:",
-          JSON.stringify(input.pageSummaries, null, 2),
-        ].join("\n")
+        [`Question: ${input.q}`, "Summaries:", JSON.stringify(input.pageSummaries, null, 2)].join(
+          "\n",
+        ),
       ),
     ]);
 
-    const finalAns =
-      typeof res.content === "string" ? res.content : String(res.content);
+    const finalAns = typeof res.content === "string" ? res.content : String(res.content);
 
     const extractSources = input.pageSummaries.map((x) => x.url);
 
@@ -148,7 +142,7 @@ export const ComposeStep = RunnableLambda.from(
       sources: extractSources,
       mode: "web",
     };
-  }
+  },
 );
 
 // LCEL
@@ -156,8 +150,4 @@ export const ComposeStep = RunnableLambda.from(
 //openAndSummarizeStep
 //stepCompose
 
-export const webPath = RunnableSequence.from([
-  webSearchStep,
-  openAndSummarizeStep,
-  ComposeStep,
-]);
+export const webPath = RunnableSequence.from([webSearchStep, openAndSummarizeStep, ComposeStep]);
