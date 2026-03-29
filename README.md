@@ -98,7 +98,7 @@ Next.js UI renders assistant message + source links (page.tsx)
 ## Project Structure
 
 ```
-search_tool_langchain_complete/
+lcel-web-agent/
 ├── agent/                         # Express + LangChain LCEL API (default port 5174)
 │   ├── src/
 │   │   ├── index.ts               # Express app, CORS, mounts /search
