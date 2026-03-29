@@ -331,7 +331,7 @@ Open [http://localhost:3000](http://localhost:3000), enter a query (at least **5
 
 ## Key Concepts Demonstrated
 
-- **LCEL branching** — `RunnableBranch` selects web vs direct pipeline after a deterministic router.
-- **RAG-like web path** — retrieve (Tavily) → load documents (fetch + `html-to-text`) → summarize chunks → generate grounded answer with citations.
-- **Schema-first API** — Zod on the wire and for environment configuration.
-- **CORS + public API URL** — the client calls the agent directly; ensure `ALLOWED_ORIGIN` matches your frontend origin in development and production.
+- **LCEL orchestration (LangChain runnables)** - Chain steps with RunnableSequence/Branch/Lambda so router → web or direct → validate stays explicit and composable.
+- **RAG-like web path** - Retrieve (Tavily) → load documents (fetch + `html-to-text`) → summarize chunks → generate grounded answer with citations.
+- **Schema-first API and structured outputs** - Zod validates requests, env, and { answer, sources }; a repair pass fixes shape if the first output fails parse.
+- **Heuristic routing (no extra LLM for “mode”)** - Rules in code pick web vs direct before heavy work, saves latency and cost vs a routing model call.
