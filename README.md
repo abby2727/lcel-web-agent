@@ -145,15 +145,15 @@ lcel-web-agent/
 
 ## Tech Stack
 
-| Layer             | Stack                                                                                    |
-| ----------------- | ---------------------------------------------------------------------------------------- |
-| **API**           | Node.js, Express, `tsx` for dev                                                          |
-| **Orchestration** | `@langchain/core` runnables (LCEL)                                                       |
-| **LLM**           | `@langchain/openai`, `@langchain/google-genai`, `@langchain/groq`                        |
-| **Validation**    | `zod`                                                                                    |
-| **Web search**    | Tavily REST API (`utils/webSearch.ts`)                                                   |
-| **HTML cleanup**  | `html-to-text`                                                                           |
-| **Frontend**      | Next.js 16, React 19, Tailwind CSS v4, Radix primitives, shadcn-style UI, `lucide-react` |
+| Layer             | Stack                                                             |
+| ----------------- | ----------------------------------------------------------------- |
+| **API**           | Node.js, Express.js                                               |
+| **Orchestration** | `@langchain/core` runnables (LCEL)                                |
+| **LLM**           | `@langchain/openai`, `@langchain/google-genai`, `@langchain/groq` |
+| **Validation**    | `zod`                                                             |
+| **Web search**    | Tavily REST API                                                   |
+| **HTML cleanup**  | `html-to-text`                                                    |
+| **Frontend**      | Next.js 16, Tailwind, ShadCN                                      |
 
 ---
 
